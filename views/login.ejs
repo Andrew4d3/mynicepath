@@ -1,0 +1,51 @@
+<div class="home-cont" ng-controller="loginController">
+	<div class="container-fluid">
+		<div class="banner">
+			<h2 class="special-font">Welcome to</h2>
+			<h1 class="special-font">MyNicePath</h1>
+		</div>
+		
+		<div class="login-cont">
+			<div class="buttons">
+				<button class="btn btn-info btn-lg special-font" ng-click="formVisible='login'">Login</button>
+				<button class="btn btn-info btn-lg special-font" ng-click="formVisible='singup'">Sing Up</button>
+			</div>
+			<div class="login-form" ng-show="formVisible=='login'">
+				<h3>Login</h3>
+				<div ng-show="formLogin.msg" class="alert alert-success" role="alert">{{formLogin.msg}}</div>
+				<form>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Username</label>
+				    <input ng-model="formLogin.username" type="text" class="form-control" id="exampleInputEmail1" placeholder="Your username">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Password</label>
+				    <input ng-model="formLogin.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				  </div>
+				  <button ng-click="login()" ng-disabled="formLogin.sending" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+			
+			<div  class="singup-form" ng-show="formVisible=='singup'">
+				<h3>Join to MyNicePath community!</h3>
+				<div ng-show="formSingup.msg" class="alert alert-success" role="alert">{{formSingup.msg}}</div>
+				<form>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Username</label>
+				    <input ng-model="formSingup.username" type="text" class="form-control" id="exampleInputEmail1" placeholder="Your username">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Password</label>
+				    <input ng-model="formSingup.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				  </div>
+				  <div class="form-group">
+				    <label  for="exampleInputPassword1">Retype Password</label>
+				    <input ng-model="formSingup.repassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password again">
+				  </div>
+				  <button ng-click="register()" ng-disabled="formSingup.sending" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+</div>

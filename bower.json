@@ -1,0 +1,25 @@
+{
+  "name": "mynicepath",
+  "description": "a Sails application",
+  "main": "app.js",
+  "authors": [
+    "andrew4d3"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.0",
+    "angular-bootstrap": "^1.1.2",
+    "angular-aside": "^1.3.2",
+    "font-awesome": "^4.5.0"
+  }
+}

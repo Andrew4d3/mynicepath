@@ -1,0 +1,106 @@
+@import url(https://fonts.googleapis.com/css?family=Finger+Paint);
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.map-container {
+	height: 100%;
+}
+
+#map{
+	min-height: 95%;
+}
+
+.map-container{
+	position: relative;
+	overflow: hidden;
+}
+
+.side-bar{
+	position: absolute;
+    z-index: 9999;
+    background-color: white;
+    height: 100%;
+    right: -20%;
+    top: 0;
+    width: 20%;
+    overflow-y: auto;
+}
+
+.side-bar .close-button{
+    font-size: 27px;
+    position: absolute;
+    top: 10px;
+    right: 14px;
+}
+
+.map-container nav{
+	margin-bottom: 0;
+}
+
+.bg-focused{
+	background-color: #E9E5DC;
+}
+
+
+
+.banner{
+	text-align: center;
+    height: 408px;
+    background-image: url("banner_img.jpg");
+    background-size: 100%;
+    background-position: 35%;
+    padding-top: 80px;
+}
+
+
+
+.banner h2{
+	margin: 0;
+	padding-top: 15px;
+}
+
+.banner h1{
+	font-size: 80px;
+	margin: 0;
+	padding-bottom: 15px;
+}
+
+.banner h2, .banner h1{
+	background-color: rgba(0, 0, 0, 0.39);
+	color: white;
+}
+
+.special-font{
+	font-family: 'Finger Paint', cursive;
+}
+
+
+
+.home-cont .container-fluid{
+	padding: 0;
+}
+
+.login-cont .buttons{
+	text-align: center;
+	padding: 40px;
+	background-color: #F7F7F7;
+}
+
+.login-cont .buttons button{
+	min-width: 200px;
+}
+
+.login-cont .login-form, .login-cont .singup-form{
+	max-width: 576px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.side-bar .path-cont li a{
+	text-decoration: none;
+	color: #3D3834;
+}

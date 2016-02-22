@@ -1,0 +1,170 @@
+<div class="map-container" ng-controller="mapController">
+	
+	<nav class="navbar navbar-default navbar-static-top">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand special-font" href="#">MyNicePath</a>
+	    </div>
+	
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li><a href="" ng-click="createPath()">Create Path <span class="sr-only">(current)</span></a></li>
+	        <li class="dropdown">
+	          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cities <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="" ng-click="goCity('nyc')" >New York</a></li>
+	            <li><a href="" ng-click="goCity('sf')" >San Francisco</a></li>
+	            <li><a href="" ng-click="goCity('paris')" >Paris</a></li>
+	            <li><a href="" ng-click="goCity('ccs')" >Caracas</a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="" data-toggle="modal" data-target="#myModal" >About</a></li>
+	        <li><a href="" ng-click="logout()">Logout</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+
+	<div class="side-bar panel panel-default" side-bar>
+	  <!-- Default panel contents -->
+	  <div class="panel-heading">
+	  	<h4>{{sidebar.stateTitle}}</h4>
+	  	<a href="" ng-click="closeSidebar()" class="close-button"><i class="fa fa-times-circle"></i></a>
+	  </div>
+	  
+	  <div ng-show="sidebar.state=='path'" class="panel-body">
+	  	<p><strong>Created by:</strong> {{currentPath.user.username}}</p>
+	    <p>{{currentPath.description}}</p>
+	  </div>
+	  
+	  <div ng-show="sidebar.state=='builder' && !newPath.is_saved" class="panel-body">
+	  	Start creating your path here. Your path must contain between 3 and 100 places.
+	  	Remember to include nice direcctions to get to the next point.<br />
+	  	You can cancel at any time by clicking the "X" above.
+		<form ng-hide="newPath.points">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Name</label>
+				<input ng-model="newPath.name" type="text" class="form-control" id="exampleInputEmail1" placeholder="Type  some nice title for your path">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Description</label>
+				<textarea ng-model="newPath.description" class="form-control" rows="3" placeholder="Describe in few words your path. Which places could we find at it? for example."></textarea>
+			</div>
+			<button ng-click="addPoint()"  class="btn btn-default" ng-disabled="!newPath.name || !newPath.description">Add your starting point</button>
+		</form>
+	  	
+	  </div>
+	  
+	  <div ng-show="(sidebar.state == 'builder') && newPath.points && !newPath.is_saved"  class="panel-body">
+	  	<form>
+	  		<div ng-show="!newPath.lastPoint" class="alert alert-success" role="alert">Click on the map the position where you want to locate this place.</div>
+			<div ng-show="newPath.lastPoint" class="alert alert-success" role="alert">Now fullfill the form below with the information of this place.</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Place</label>
+				<input ng-model="newPath.lastPoint.name" ng-disabled="!newPath.lastPoint" type="text" class="form-control" id="exampleInputEmail1" placeholder='For example: "Madison Square Garden"'>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Description</label>
+				<textarea ng-model="newPath.lastPoint.description" ng-disabled="!newPath.lastPoint" class="form-control" rows="3" placeholder="Describe this place in few words. Some suggestion or important tip to keep in mind while you are here."></textarea>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputEmail1">What's next?</label>
+				<textarea ng-model="newPath.lastPoint.next" ng-disabled="!newPath.lastPoint" class="form-control" rows="3" placeholder="Now it's time to move on! Where should we go now? If this is the last point, you can give a final advice here."></textarea>
+			</div>
+			<button ng-click="includePoint(true)"  class="btn btn-default" ng-disabled="!newPath.lastPoint.name || !newPath.lastPoint.description || !newPath.lastPoint.next">Add another point</button>
+			<button ng-click="includePoint(false)"  class="btn btn-default" ng-disabled="!newPath.lastPoint.name || !newPath.lastPoint.description || !newPath.lastPoint.next || newPath.points.length < 2">Add this point and no more</button>
+		</form>
+	  </div>
+	  
+	  <div ng-show="(sidebar.state == 'builder') && newPath.is_saved" class="panel-body">
+	  	<div class="alert alert-success" role="alert">
+	  		That's Great! Your new path is saved. Now it's being shared with the rest of the world.<br />
+	  		Hopefully some travelers will have the same fun you had visiting these places :)
+	  	</div>
+	  </div>
+	  
+	  <ul ng-show="(sidebar.state == 'builder') && newPath.is_saved" class="list-group path-cont">
+	    <li ng-repeat="point in newPath.points" class="list-group-item">
+    		<div>
+	    		<h4>{{point.name}}</h4>
+	    		<p class="desc">
+	    			{{point.description}}	
+	    		</p>
+	    		<p class="next">
+	    			<strong>What's next?</strong> {{point.directions_next}} 	
+	    		</p>
+    		</div>
+	    </li>
+	  </ul>
+	  
+	
+	  <!-- List group -->
+	  <ul ng-show="sidebar.state=='path'" class="list-group path-cont">
+	    <li ng-repeat="point in currentPath.points" id="point-{{point.id}}" class="list-group-item">
+	    	<a href="" ng-click="centerMap(point)">
+	    		<div>
+		    		<h4>{{point.name}}</h4>
+		    		<p class="desc">
+		    			{{point.description}}	
+		    		</p>
+		    		<p class="next">
+		    			<strong>What's next?</strong> {{point.directions_next}} 	
+		    		</p>
+	    		</div>
+	    	</a>
+	    </li>
+	  </ul>
+	  
+	</div>
+	
+	
+	<google-maps map="map" ></google-maps>	
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title special-font" id="myModalLabel">MyNicePath</h4>
+      </div>
+      <div class="modal-body">
+      	<p>
+      		<strong>MyNicePath</strong> is a webapp designed to help travelers around the world to find the best path to take when they're visiting a new place (city, beach, mountains, etc)<br />
+      		How? Thanks to the community of travelers of course! Any traveler can create paths with descriptions and directions, so they can help other travelers to know the best places to go and how to reach those places.
+      	</p>
+      	<h3>How does it work?</h3>
+      	<p>It's easy!</p>
+      	<ul>
+      		<li>
+      			You can create a path by clicking on "Create Path" at the navigation bar.
+      		</li>
+      		<li>
+      			You can check paths cratead by other users (so yours too) by clicking on the red markers located around the map.
+      		</li>
+      	</ul>
+      	<p>
+      		This webapp was created by <strong>Andrew Davis Escalona</strong> from Caracas-Venezuela. I'm open to receive any suggestion or comment about this work.<br />
+      		I created this app in less than 48 hours in order to participate in the 2016 HACK.SUMMIT() VIRTUAL HACKATHON. It's not a product ready for production, so you might find bugs.
+      	</p>
+      	<p>
+      		My email: andrew4d3@gmail.com<br />
+      		Thanks!
+      	</p>
+        
+      </div>
+    </div>
+  </div>
+</div>
